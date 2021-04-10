@@ -10,12 +10,15 @@
 
             @include('template.search')
 
-    <div class="col-start-5 col-end-9">
-        <p class="text-gray-500 text-center text-3xl">About</p>
-    </div>
-
     <div class="col-start-5 col-end-13">
+
         <div class="grid grid-cols-12 gap-2 mt-2">
+
+            <div class="col-start-3 col-end-6 mb-4">
+                <p class="text-gray-500 text-center text-4xl">About</p>
+            </div>
+
+
             <div class="col-start-1 col-end-4">
                 <p class="text-gray-500 text-center text-2xl">About</p>
                 <p class="text-gray-500">This site was built primarily for me to learn Laravel and a few other programs better. It's more of a learning/testbed for me.</p>
