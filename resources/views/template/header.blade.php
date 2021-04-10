@@ -22,3 +22,5 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+
+<div class="md:container md:mx-auto bg-gray-50">

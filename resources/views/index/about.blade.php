@@ -2,8 +2,6 @@
 @include('template.header')
 
 
-<div class="md:container md:mx-auto">
-
     <!-- Navigation bar template needs to go right here -->
     @include('template.navigation')
 
