@@ -6,50 +6,77 @@
 
 
 
-    <div class="container">
-        <div class="row">
+<div class="grid grid-cols-12 gap-4 mt-2">
 
-            @include('template.search')
+    @include('template.search')
 
-            <div class="col-sm-9 bg-light">
-                <table class="table table-striped">
-                    @if($countyByAge->isNotEmpty())
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Zip</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($countyByAge as $citizen)
-                            <tr>
-                                <th scope="row">{{ $citizen->id }}</th>
-                                <td><a href="/citizen/{{ $citizen->id }}">{{ ucwords(strtolower($citizen->first_name.' '.$citizen->last_name)) }}</a></td>
-                                <td>{{ \Carbon\Carbon::parse($citizen->date_of_birth)->age }}</td>
-                                <td>{{ ucwords(strtolower($citizen->residential_address)) }}</td>
-                                <td>{{ $citizen->residential_zip }}</td>
-                            </tr>
+    <div class="col-start-4 col-end-12">
+        <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        @if($countyByAge->isNotEmpty())
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Age
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Address
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Zip
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach ($countyByAge as $citizen)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        <a href="/citizen/{{ $citizen->id }}">{{ ucwords(strtolower($citizen->first_name.' '.$citizen->last_name)) }}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {{ \Carbon\Carbon::parse($citizen->date_of_birth)->age }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold">
+                      {{ ucwords(strtolower($citizen->residential_address)) }}
+                    </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $citizen->residential_zip }}
+                                        </td>
 
+                                    </tr>
+                                @endforeach
 
-
-                        @endforeach
-                        </tbody>
-
-                    @else
-                        <div>No data found</div>
-                    @endif
-
-                </table>
-
-                {{ $countyByAge->links() }}
+                                <!-- More items... -->
+                                </tbody>
+                            </table>
+                        @else
+                            <div>No data found</div>
+                        @endif
+                    </div>
+                    <div class="mt-6">
+                        {{ $countyByAge->links() }}
+                    </div>
+                </div>
 
             </div>
-
         </div>
     </div>
+</div>
+
 
 
 @include('template.footer')

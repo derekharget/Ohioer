@@ -5,20 +5,16 @@
     <!-- Navigation bar template needs to go right here -->
     @include('template.navigation')
 
+    <div class="grid grid-cols-12 gap-4 mt-2">
 
+        @include('template.search')
 
-    <div class="container">
-        <div class="row">
+        <div class="col-start-5 col-end-9">
+            <p class="text-gray-500 text-center text-4xl">Name Search:</p>
+        </div>
 
-            @include('template.search')
-
-            <div class="col-sm-9 bg-light">
-
-                <h2 class="text-center"> Begin your search:</h2>
-                <p class="text-center">Some Examples: <a href="{{ url('/search?first=john&last=doe') }}">John Doe</a> & Jane Doe</p>
-
-            </div>
-
+        <div class="col-start-5 col-end-9">
+            <p>Some Examples: <a href="{{ url('/search?first=john&last=doe') }}">John Doe</a> & Jane Doe</p>
         </div>
     </div>
 
