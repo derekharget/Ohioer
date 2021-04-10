@@ -35,4 +35,8 @@ Route::prefix('/county')->group(function () {
 
     Route::get('/{county}/age/{age}', [CountyController::class, 'countyByAge'])->name('countybyAge');
 
+    Route::get('/{county}/zip', [CountyController::class, 'getCountyByZip'])->name('countByZip');
+
+    Route::get('/{county}/zip/{zip}', [CountyController::class, 'getCountyByZipByAge'])->name('getCountyByZipByAge');
+
 });

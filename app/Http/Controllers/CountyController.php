@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use mysql_xdevapi\Table;
 
 class CountyController extends Controller
 {
@@ -16,7 +17,7 @@ class CountyController extends Controller
             $countyByAge = Cache::rememberForever('county_age_home_'.Str::lower($county),  function () use ($county) {
 
                 return DB::table('ohio_citizen_data')
-                    ->select(DB::raw('TIMESTAMPDIFF(YEAR, "ohio_citizen_data.date_of_birth", CURDATE()) AS age, count("ohio_citizen_data.id") as citizenAge'))
+                    ->select(DB::raw('TIMESTAMPDIFF(YEAR, ohio_citizen_data.date_of_birth, CURDATE()) AS age, count(ohio_citizen_data.id) as citizenAge'))
                     ->join('ohio_county', 'ohio_county.county_id', '=', 'ohio_citizen_data.county_number')
                     ->groupBy('age')
                     ->having('age', '<=', '120')
@@ -94,5 +95,53 @@ class CountyController extends Controller
 
         return view('county.countyByAge', compact('countyByAge'));
     }
+
+
+    public function getCountyByZip(string $county)
+    {
+        // Lower case county just in case users attempt to put in records that don't exist.
+        $county = Str::lower($county);
+
+        //Enable caching if Debug isn't enabled in .env
+        if(env('APP_DEBUG') == 0) {
+
+            $countyByZip = Cache::rememberForever('county_'.Str::lower($county).'_zip__page_',  function () use ($county) {
+
+                return DB::table('ohio_citizen_data')
+                    ->select('residential_zip', 'ohio_zip_codes.city', DB::raw('COUNT(id) as citizenAmount'))
+                    ->join('ohio_zip_codes', 'ohio_citizen_data.residential_zip', '=', 'ohio_zip_codes.zip')
+                    ->where('ohio_zip_codes.county', '=', $county)
+                    ->groupBy('residential_zip')->get();
+            });
+
+        } else {
+            $countyByZip = DB::table('ohio_citizen_data')
+                ->select('residential_zip', 'ohio_zip_codes.city', DB::raw('COUNT(id) as citizenAmount'))
+                ->join('ohio_zip_codes', 'ohio_citizen_data.residential_zip', '=', 'ohio_zip_codes.zip')
+                ->where('ohio_zip_codes.county', '=', $county)
+                ->groupBy('residential_zip')->get();
+        }
+
+
+        return view('county.countyByZip', [
+            'countyByZip' => $countyByZip,
+            'county' => $county
+        ]);
+    }
+
+    public function getCountyByZipByAge(string $county, int $zip)
+    {
+        $ageByCountyZip = DB::table('ohio_citizen_data')
+                ->select(DB::raw('TIMESTAMPDIFF(YEAR, ohio_citizen_data.date_of_birth, CURDATE()) AS age, count(ohio_citizen_data.id) as citizenAge, ohio_zip_codes.city'))
+                ->join('ohio_zip_codes', 'ohio_citizen_data.residential_zip', '=', 'ohio_zip_codes.zip')
+                ->where('ohio_zip_codes.county', '=', 'Lucas')
+                ->where('ohio_citizen_data.residential_zip', '=', 43605)
+                ->groupBy('age')
+                ->havingRaw('18 >= age <= 120')
+                ->get();
+
+        return $ageByCountyZip;
+    }
+
 
 }
