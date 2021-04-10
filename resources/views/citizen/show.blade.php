@@ -25,7 +25,7 @@
                         <div class="col-md-6">
                             <p><b>Date of Birth:</b> {{ $dob }} </p>
                             <p><b>Address:</b> {{ $home_address }}  </p>
-                            <p><b>Zip:</b> {{ $home_zip }}    </p>
+                            <p><b>Zip:</b> <a href="{{ url('/county/'.Str::lower($county_name)).'/zip/'.$home_zip }}">{{ $home_zip }}</a>    </p>
                             <p><b>City:</b> {{ $home_city }}</p>
                             <p><b>State:</b> {{ $home_state }} </p>
                             <p><b>County:</b> <a href="{{ url('/county/'.Str::lower($county_name)) }}">{{ $county_name }}</a></p>
