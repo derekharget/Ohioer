@@ -1,10 +1,15 @@
-<footer class="footer mt-auto py-3 bg-light">
-    <div class="container">
-        <span class="text-muted"><p class="text-center">&#169;	<a href="{{ url('/') }}">Ohioer</a>. Site used for non-commercial and educational use only. Page Generated in {{ round(microtime(true) - LARAVEL_START, 3) }} Seconds</p></span>
+<footer class="footer max-w-7xl mx-auto px-2">
+    <div class="container mx-auto px-6">
+        <div class="mt-16 border-t-2 border-gray-300 flex flex-col items-center">
+            <div class="sm:w-2/3 text-center py-6">
+                <p class="text-sm text-blue-700 font-bold mb-2">
+                    © {{ now()->year }} {{ env('APP_NAME') }} - Generated in {{ round(microtime(true) - LARAVEL_START, 3) * 1000 }}ms
+                </p>
+            </div>
+        </div>
     </div>
 </footer>
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
 </html>
