@@ -70,7 +70,11 @@
                         @endif
                     </div>
                     <div class="mt-6">
-                    {{ $citizen_user_data->links() }}
+                        @if (Route::current()->uri() === 'browse')
+                            {{ $citizen_user_data->links('vendor.pagination.simple-tailwind') }}
+                        @else
+                            {{ $citizen_user_data->links() }}
+                        @endif
                     </div>
                 </div>
 
