@@ -23,4 +23,4 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<div class="md:container md:mx-auto bg-gray-50">
+<div class="md:container md:mx-auto bg-gray-50 h-screen">
